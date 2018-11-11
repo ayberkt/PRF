@@ -1,5 +1,7 @@
-(* open Core.Printf;; *)
 (* open Core.List;; *)
+open Core.In_channel;;
+open Core.Printf;;
+open AbsPRF;;
 
 type prf_exp =
    Zero
@@ -39,6 +41,30 @@ let rec eval (p : prf_exp) (arg : int list) : int =
   | Comp (f, gs), rho -> eval f (List.map (fun x -> eval x rho) gs)
   | Rec (f, g), n::rho -> natrec n (eval f rho) (fun n r -> eval g (r::n::rho))
   | _ -> raise Undefined
+
+let rec to_prf_exp : sPRFExp -> prf_exp =
+  function
+  | Zero -> Zero
+  | Succ -> Succ
+  | Proj x -> Proj x
+  | Comp (f, gs) -> Comp (to_prf_exp f, List.map to_prf_exp (to_list gs))
+  | Rec (f, g) -> Rec (to_prf_exp f, to_prf_exp g)
+and to_list : sPRFExpList -> sPRFExp list =
+  function
+  | SPRFExpNil -> []
+  | SPRFExpCons (f, gs) -> f::(to_list gs)
+
+let rec vec_to_list : vector -> int list =
+  function
+  | Nil -> []
+  | Cons (xs, x) -> x :: vec_to_list xs
+
+let run (_ : string) : int = 0
+
+let main () =
+  let MkPRFI (sprf, args) = ParPRF.pPRFIExp LexPRF.token (Lexing.from_channel stdin) in
+  let prf  = to_prf_exp sprf in
+  printf "%d\n" (eval prf (vec_to_list args));;
 
 (* The predecessor function. *)
 let pred = Rec (Zero, Proj 1)
