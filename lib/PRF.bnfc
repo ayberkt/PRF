@@ -1,0 +1,15 @@
+MkPRFI. PRFIExp ::= SPRFExp "[" Vector "]";
+
+Nil.  Vector ::= "nil" ;
+Cons. Vector ::= Vector "." Integer ;
+
+SPRFExpNil.  SPRFExpList ::= "" ;
+SPRFExpCons. SPRFExpList ::= SPRFExp "," SPRFExpList ;
+
+Zero. SPRFExp ::= "z";
+Succ. SPRFExp ::= "s";
+Proj. SPRFExp ::= "proj" Integer ;
+Comp. SPRFExp ::= "comp" SPRFExp SPRFExpList ;
+Rec.  SPRFExp ::= "rec" SPRFExp SPRFExp ;
+
+coercions SPRFExp 1;
