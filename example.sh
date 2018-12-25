@@ -1,6 +1,0 @@
-S1="s[nil.1]"
-echo "$S1 = `echo $S1 | ./_build/default/runprf.exe`"
-S1="s[nil.10]"
-echo "$S1 = `echo $S1 | ./_build/default/runprf.exe`"
-S1="(rec z (proj 1)) [nil.8]"
-echo "$S1 = `echo $S1 | ./_build/default/runprf.exe`"

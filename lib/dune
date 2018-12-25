@@ -1,5 +1,0 @@
-(library
-  (name PRF)
-  (libraries core))
-
-(env (dev (flags (:standard -warn-error -A))))

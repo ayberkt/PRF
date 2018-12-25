@@ -1,3 +1,0 @@
-(executable
-  (name runprf)
-  (libraries PRF core qcheck))
