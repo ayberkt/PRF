@@ -38,3 +38,17 @@ mutual
   ⟦_⟧⋆ : ∀ {m n} → Vec (PRF m) n → Vec ℕ m → Vec ℕ n
   ⟦ nil     ⟧⋆ ρ = nil
   ⟦ fs , f  ⟧⋆ ρ = ⟦ fs ⟧⋆ ρ , ⟦ f ⟧ ρ
+
+mutual
+
+  data _$_⇓_ : ∀ {n} → PRF n → Vec ℕ n → ℕ → Set where
+    R-zero  : zero $ nil ⇓ 0
+    R-suc   : ∀ {n} → suc $ (nil , n) ⇓ (1 + n)
+    R-proj  : ∀ {k} {ρ : Vec ℕ k} {i} → (proj i) $ ρ ⇓ index ρ i
+    R-rec-Z : ∀ {k} {ρ : Vec ℕ k} {f g n} → f $ ρ ⇓ n → (rec f g) $ (ρ , zero) ⇓ n
+    R-rec-S : ∀ {k} {ρ : Vec ℕ k} {f g m n o}
+            → (rec f g) $ (ρ , m) ⇓ n
+            → g $ (ρ , n , m) ⇓ o
+            → (rec f g) $ (ρ , suc m) ⇓ o
+
+  data _$_⇓⋆_ : ∀ {m n} → Vec (PRF n) m → Vec ℕ n → Set where
