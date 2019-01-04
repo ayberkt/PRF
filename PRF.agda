@@ -13,6 +13,8 @@ data Vec (A : Set) : ℕ → Set where
   nil : Vec A 0
   _,_ : ∀ {n} → Vec A n → A → Vec A (suc n)
 
+infixl 5 _,_
+
 data PRF : ℕ → Set where
   zero : PRF 0
   suc  : PRF 1

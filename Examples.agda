@@ -34,3 +34,12 @@ conj-correct zero zero = refl
 conj-correct (suc m) zero = refl
 conj-correct zero (suc n) = refl
 conj-correct (suc m) (suc n) = refl
+
+L2Q4-1 : ⟦ comp zero nil ⟧ ((nil , 5) , 7) ≡ 0
+L2Q4-1 = refl
+
+L2Q4-2 : ⟦ comp suc (nil , proj zero) ⟧ (nil , 5 , 7) ≡ 8
+L2Q4-2 = refl
+
+L2Q4-3 : ⟦ rec zero (proj (suc zero)) ⟧ (nil , 2) ≡ 0
+L2Q4-3 = refl
