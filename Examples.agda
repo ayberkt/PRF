@@ -2,7 +2,8 @@ module Examples where
 
 open import PRF
 open import Data.Fin  using (Fin; zero; suc)
-open import Data.Nat  using (ℕ; zero; suc; _+_)
+open import Data.Nat  using (ℕ; zero; suc; _+_; _*_; _^_)
+open import Data.Nat.Properties using (+-*-suc; +-comm; *-comm)
 open import Data.Bool using (Bool; true; false; _∧_)
 open import Relation.Binary.PropositionalEquality using (_≡_; refl; cong; sym)
 
