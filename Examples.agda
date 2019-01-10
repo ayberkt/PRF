@@ -20,6 +20,20 @@ add-correct : ∀ m n → m + n ≡ ⟦ add ⟧ ((nil , n) , m)
 add-correct zero    n = refl
 add-correct (suc m) n = cong suc (add-correct m n)
 
+mult : PRF 2
+mult = rec (comp zero nil) (comp add (nil , proj (suc zero) , proj (suc (suc zero))))
+
+mult-correct : ∀ m n → m * n ≡ ⟦ mult ⟧ ((nil , n) , m)
+mult-correct zero    n = refl
+mult-correct (suc m) n rewrite add-correct n (m * n) | mult-correct m n = refl
+
+exp : PRF 2
+exp = rec (comp suc (nil , comp zero nil)) (comp mult (nil , proj (suc zero) , proj (suc (suc zero))))
+
+exp-correct : ∀ m n → n ^ m ≡ ⟦ exp ⟧ ((nil , n) , m)
+exp-correct zero    n = refl
+exp-correct (suc m) n rewrite mult-correct n (n ^ m) | exp-correct m n = refl
+
 ite : PRF 3
 ite = rec (proj zero) (proj (suc (suc zero)))
 
