@@ -34,6 +34,20 @@ exp-correct : ∀ m n → n ^ m ≡ ⟦ exp ⟧ ((nil , n) , m)
 exp-correct zero    n = refl
 exp-correct (suc m) n rewrite mult-correct n (n ^ m) | exp-correct m n = refl
 
+two : PRF 2
+two = comp suc (nil , comp suc (nil , comp zero nil))
+
+three : PRF 2
+three = comp suc (nil , two)
+
+encode : PRF 2
+encode = comp mult (nil , comp exp (nil , three , proj (suc zero)) , comp exp (nil , two , proj zero))
+
+encode-correct : ∀ m n → (2 ^ m) * (3 ^ n) ≡ ⟦ encode ⟧ ((nil , n) , m)
+encode-correct m n rewrite mult-correct (2 ^ m) (3 ^ n)
+                         | exp-correct n 3
+                         | exp-correct m 2 = refl
+
 ite : PRF 3
 ite = rec (proj zero) (proj (suc (suc zero)))
 
